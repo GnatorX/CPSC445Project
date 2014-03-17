@@ -1,0 +1,4 @@
+>RS008811|BA000002.2/445649-445320|Aeropyrum pernix K1|RNaseP_arch
+GGCGGCGCCGGCCGGCGGCCCACGGCCCCCCAGCCAGGGGGGCUGAGGAAACUCCGCCCUCCCCGCGGCGGCCGGGCCCCGCAAGGGGCACGGGUGAAACCCGUGGCAACGGCACAGAAACGACACGGCCCCGGGGCGUGUCGAGGACGCGGCUAGGCCGCCCUGGCAACAGGGCGGCAGCAAACCGCAGAGGAACCCCGGGGAUGCGGUGAAACGGCCGCCCCCGGCGGAGCAAGGCCCCCGGGCGGUGAGGGCCGCGCGAAGCCCGGGGGGAGACCGCUUAGCCCAAUGCCGCCGAAGUACAGAAGGCGGGUUAUGGCCGGCGCCGCC
+(((((((((((((((((((((.(((((((((.....))))))))).))..........((((........((((((((((....)))))((((((...))))))((...((((.(.(....(.(.(((((((((((..(.((......((((.(.((((((((((....)))))))))..).).)))).)).)..)))))))).).))))....)))))).))))))))))).(.(((((((((((..((.(.....).))..)))))))))....))..).........)))))).....................)))))))))))))
+
