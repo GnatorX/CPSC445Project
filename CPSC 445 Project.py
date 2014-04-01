@@ -9,59 +9,42 @@ compareFileData=open(compareFile,'r')
 
 sequenceFileData=sequenceFileData.readlines()
 compareFileData=compareFileData.readlines()
+
 def getSequence(fileData,i):
 	sequence = []
-	structure= []
+	info=' '
 	s = fileData[i]
 	if s.startswith('>'):
-		i=i+1
+		info=s		
+		i=i+2
 		s=fileData[i]
-	s = s.rstrip()
-	for item in s:
-		sequence.append(item)
-	i=i+1
-	s = fileData[i]
-	s=s.rstrip()
-	for item in s:
-		structure.append(item)
-	return sequence,structure
+		s=s.rstrip()
+	while   s.startswith('>')!=True and s:
+		sequence.append(s)
+		i=i+1
+		if i>=len(fileData):
+			break
+		s=fileData[i]
+		s = s.rstrip()
+	return sequence,info,i+1
 
 #def getKnownSequence(fileData):
 	
 
 unknownSequence=[]
-unknownStructure=[]
-unknownSequence,unknownStructure=getSequence(sequenceFileData,0)
+
+unknownSequence,unknownInfo,j=getSequence(sequenceFileData,0)
+
 
 knownSequences=[]
-knownStructures=[]
-#print unknownSequence,unknownStructure
+knownInfos=[]
+
 #print unknownSequence
-for i in range(0,len(compareFileData)-2):
-	sequence = []
-	structure= []
-	s = compareFileData[i]
-	if s.startswith('>'):
-		i=i+1
-		s=compareFileData[i]
-
-	s = s.rstrip()
-	for item in s:
-		sequence.append(item)
-	i=i+1
-	s = compareFileData[i]
-	s=s.rstrip()
-	for item in s:
-		structure.append(item)
-	knownSequences.append(sequence)
-	knownStructures.append(structure)
-#print knownSequences[0],knownStructures[0]
-
-########################################################################################################################
-#Obtain stem loops
-
-
-
-
-
+i=0
+while i<len(compareFileData):
+	knownSequence,knownSequenceInfo,i=getSequence(compareFileData,i)
+	knownSequences.append(knownSequence)
+	knownInfos.append(knownSequenceInfo)
+	
+#print knownSequences[0]
 
