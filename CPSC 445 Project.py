@@ -39,55 +39,79 @@ def getStemLoopTrees(sequence):
 		line = line.rstrip()
 		line=line.split(';')
 		item= line[0].split()
-		print len(line)
+		#print len(line)
 		if len(line)==2:
 			item2=line[1].split()
 		else:
 			end=True
 		loopType=item[0]+" " +item[1]
 		if loopType == loopTypeP:
-			position=item[3].split(',')
+			position=[int(x) for x in item[3].split(',')]
 			#print position,previousPosition
 			if not firstLine:
 				if position[0] in previousPosition and position[1] in previousPosition:
-					p = item2[1].split(',')
+					p = [int(x) for x in item2[1].split(',')]
 					item2[3]=item2[3].translate(None,':')
-					previousPosition=(p[0],p[1],item2[3])
+					previousPosition=(p[0],p[1],item2[3],list(),list(),False)
 					item[5]=item[5].translate(None,':')
-					StemLoopTree.append((position[0],position[1],item[5]))
+					StemLoopTree.append((position[0],position[1],item[5],list(),list(),False))
 				else:
 					item2[3]=item2[3].translate(None,':')
-					StemLoopTree.append((previousPosition[0],previousPosition[1],item2[3]))				
+					StemLoopTree.append((previousPosition[0],previousPosition[1],item2[3],list(),list(),False))				
 					StemLoopTrees.append(StemLoopTree)
 					StemLoopTree=[]
 					item[5]=item[5].translate(None,':')				
-					StemLoopTree.append((position[0],position[1],item[5]))
+					StemLoopTree.append((position[0],position[1],item[5],list(),list(),False))
 					end=False
 					firstLine=True
 				
 				
 			else:
 				item[5]=item[5].translate(None,':')	
-				StemLoopTree.append((position[0],position[1],item[5]))
-				p = item2[1].split(',')
+				StemLoopTree.append((position[0],position[1],item[5],list(),list(),False))
+				p = [int(x) for x in item2[1].split(',')]
 				item2[3]=item2[3].translate(None,':')
-				previousPosition=(p[0],p[1],item2[3])
+				previousPosition=(p[0],p[1],item2[3],list(),list(),False)
 				firstLine=False
 		if end :
 			if len(StemLoopTree)>0:
+				previousPosition=(previousPosition[0],previousPosition[1],previousPosition[2],previousPosition[3],previousPosition[4],True)
 				StemLoopTree.append(previousPosition)
 			else:
-				position=item[3].split(',')
+				position=[int(x) for x in item[3].split(',')]
 				item[5]=item[5].translate(None,':')
-				StemLoopTree.append((position[0],position[1],item[5]))
+				StemLoopTree.append((position[0],position[1],item[5],list(),list(),False))
 			StemLoopTrees.append(StemLoopTree)
 			StemLoopTree=[]	
 			end=False
 			firstLine=True
 	
 	return 	StemLoopTrees
-#def getKnownSequence(fileData):
-	
+
+def addLeaves(stemLoopTrees):
+	for tree in stemLoopTrees:
+		curLeft=0
+		curRight=0
+		first=True
+		
+		for num in range(0,len(tree)):
+			if first:
+				curLeft=tree[num][0]
+				curRight=tree[num][1]
+				first=False
+			else:
+				if tree[num][0]-1!=curLeft:
+				#	print "sdfds"
+					for numK in range(curLeft+1,tree[num][0]):
+						tree[num-1][3].append(numK)
+				if tree[num][1]!=curRight-1:
+					print "sfsfs",str(tree[num][1])
+					for numK in range(tree[num][1]+1,curRight):
+						tree[num-1][4].append(numK)
+				curLeft=tree[num][0]
+				curRight=tree[num][1]
+	return stemLoopTrees
+
 
 unknownSequence=[]
 unknownSequence,unknownInfo,j=getSequence(sequenceFileData,0)
@@ -107,6 +131,6 @@ while i<len(compareFileData):
 	k = getStemLoopTrees(knownSequence)
 	knownSequenceStemLoopTrees.append(k)
 
-print knownSequenceStemLoopTrees
-
+unknownStemLoopTrees=addLeaves(unknownStemLoopTrees)
+print unknownStemLoopTrees
 
