@@ -1,5 +1,6 @@
 import sys
-
+import numpy
+from DP import findMin
 knownSequences=[]
 sequenceFile=sys.argv[1]
 compareFile=sys.argv[2]
@@ -105,23 +106,28 @@ def addLeaves(stemLoopTrees):
 					for numK in range(curLeft+1,tree[num][0]):
 						tree[num-1][3].append(numK)
 				if tree[num][1]!=curRight-1:
-					print "sfsfs",str(tree[num][1])
+				#	print "sfsfs",str(tree[num][1])
 					for numK in range(tree[num][1]+1,curRight):
 						tree[num-1][4].append(numK)
+				if tree[num][5]:
+				#	print "sfdsfs",tree[num]
+					for numK in range(tree[num][0]+1,tree[num][1]):
+						tree[num][3].append(numK)
+					#print tree[num]
 				curLeft=tree[num][0]
 				curRight=tree[num][1]
 	return stemLoopTrees
 
+#def compareStemLoop(unknownStemLoop,knownStemLoop):
 
 unknownSequence=[]
 unknownSequence,unknownInfo,j=getSequence(sequenceFileData,0)
 unknownStemLoopTrees=getStemLoopTrees(unknownSequence)
-
+unknownStemLoopTrees=addLeaves(unknownStemLoopTrees)
 #print unknownStemLoopTrees
+
 knownSequences=[]
 knownInfos=[]
-
-#print unknownSequence
 i=0
 knownSequenceStemLoopTrees=[]
 while i<len(compareFileData):
@@ -131,6 +137,15 @@ while i<len(compareFileData):
 	k = getStemLoopTrees(knownSequence)
 	knownSequenceStemLoopTrees.append(k)
 
-unknownStemLoopTrees=addLeaves(unknownStemLoopTrees)
-print unknownStemLoopTrees
+
+for num in range(0,len(knownSequenceStemLoopTrees)):
+	knownSequenceStemLoopTrees[num]=addLeaves(knownSequenceStemLoopTrees[num])
+
+#print knownSequenceStemLoopTrees[0]
+#####################################################################################################
+#Initialization
+#D=numpy.zeros((
+print unknownStemLoopTrees[1]
+#print knownSequenceStemLoopTrees[0][0]
+findMin(unknownStemLoopTrees[1],knownSequenceStemLoopTrees[0][0])
 
