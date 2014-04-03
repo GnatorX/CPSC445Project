@@ -4,23 +4,30 @@ deletionScore=insertScore=0.75
 relabelScore=0.25
 arcCreateScore=arcDestroyScore=0.5
 alterScore=completeScore=1
+def getIndexingPair(stemLoop):
+	indexingPair=(0,0)
+	stemLoopLen=len(stemLoop)
+	if stemLoop[stemLoopLen-1][5]:
+		indexingPair=(len(stemLoop[stemLoopLen-1][3])/2+stemLoop[stemLoopLen-1][0],len(stemLoop[stemLoopLen-1][3])/2+stemLoop[stemLoopLen-1][0]+1)
+		
+	else:
+		indexingPair=(stemLoop[stemLoopLen-1][0],stemLoop[stemLoopLen-1][1])
 
+	return indexingPair
 
 def findMin(inputStemLoop,outputStemLoop):
 	D=[]
 	temp=[0]
 	D.append(temp)
-	inputIndexingPair=(0,0)
-	inputStemLoopLen=len(inputStemLoop)
-	outputStemLoopLen=len(outputStemLoop)
-	if inputStemLoop[inputStemLoopLen-1][5]:
-		inputIndexingPair=(len(inputStemLoop[inputStemLoopLen-1][3])/2+inputStemLoop[inputStemLoopLen-1][0],len(inputStemLoop[inputStemLoopLen-1][3])/2+inputStemLoop[inputStemLoopLen-1][0]+1)
-		
-	else:
-		inputIndexingPair=(inputStemLoop[inputStemLoopLen-1][0],inputStemLoop[inputStemLoopLen-1][1])
-
+	inputIndexingPair=getIndexingPair(inputStemLoop)
 	print inputIndexingPair
+	outputIndexingPair=getIndexingPair(outputStemLoop)
+	print outputIndexingPair
 	
+	
+
+
+
 #if outputStemLoop[outputStemLoopLen-1][5]:
 
 

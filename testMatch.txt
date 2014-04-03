@@ -1,29 +1,24 @@
 >RS000043|X07692.1/700-821|Thermococcus celer|5S_rRNA
 UACGGCGGUCAUAGCGGCGGGGUCACACCCGGUCUCGUUUCGACCCCGGAAGUUAAGCCCGCCAGCGAUCCCGGUUGUACUGCCCUCCGGGAGGGGGCGGGAAGCCGGGGACGCCGCCGGCC
 (.(((((((..(.((((((((.(.((..((((((.......))..))))..)).)..)))))).)).)(((((((..(.(((.(((((....)))))).)).))))))))..))))))))..
-
 >RS000324|X00501.1/7-121|Escherichia coli|5S_rRNA
 CUGGCGGCCGUAGCGCGGUGGUCCCACCUGACCCCAUGCCGAACUCAGAAGUGAAACGCCGUAGCGCCGAUGGUAGUGUGGGGUCUCCCCAUGCGAGAGUAGGGAACUGCCAGAC
 (((((((.(.(.((((((((.((.(..((((.(.......)...))))..).))..)))))).)))((.((..((..(.(((....)))).)....).)).)))..)))))))..
-
 >RS000502|X71804.1/109-227|Mus musculus (house mouse)|5S_rRNA
 GUCUACGGCCAUACCACCCUGAACGCGCCCGAUCUCGUCUGAUCUCGGAAGCUAAGCAGGGUCGGGCCUGGUUAGUACUUGGAUGGGAGACCGCCUGGGAAUACCGGGUGCUGUAGGCU
 (((((((((....((((((((.(.((..((((((......))..))))..)))...)))))).))(((((((..((.(((((.(((....))).))))).)))))))))))))))))).
-
 >RS000500|X00190.1/1-118|Gallus gallus (chicken)|5S_rRNA
 GCCUACGGCCAUACCACCCUGGAAACGCCCGAUCUCGUCUGAUCUCGGAAGCUAAGCAGGGUCGGGCUCGGUUAGUACUUGGAUGGGAGACUGCCUGGGAAUACCGAGUGUCGUAGGC
 (((((((((....((((((((..(.(..((((((......))..))))..).)...)))))).))(((((((..((.(((((.(((....))).))))).))))))))))))))))))
-
 >RS000495|M10850.1/361-479|Xenopus laevis (African clawed frog)|5S_rRNA
 GCCUACGGCCACACCACCCUGAAAGUGCCUGAUCUCGUCUGAUCUCAGAAGCGAUACAGGGUCGGGCCUGGUUAGUACCUGGAUGGGAGACCGCCUGGGAAUACCAGGUGUCGUAGGCU
 (((((((((....(((((((((..((..((((((......))..))))..))..).)))))).))(((((((..((.(((((.(((....))).))))).)))))))))))))))))).
-
 >RS000145|K01389.1/140-255|Bacillus subtilis|5S_rRNA
 UCUGGUGAUGAUGGCGAAGAGGUCACACCCGUUCCCAUGCCGAACACGGAAGUUAAGCUCUUCAGCGCCGAUGGUAGUCGGGGGUUUCCCCCUGUGAGAGUAGGACAUCGCCAGGC
 ((((((((((.(.((((((((.(.((..((((((.......))..))))..)).)..)))))).)))((.((..(((..((((....)))).).)..).)).)).)))))))))).
-
 >RS000411|X16634.1/937-1057|Candida albicans|5S_rRNA
 GGUUGCGGCCAUAUCUAGCAGAAAGCACCGUUCCCCGUUCGAUCAACCGUAGUUAAGCUGCUAAGAGCAAUACCGAGUAGUGUAGUGGGAGACCAUACGCGAAACUAUUGUGCUGCAAUCU
 (((((((((....((((((((..(((((.(((.(......)...))).)).)))...)))))).))((((((....((..(.(.((((....)))))...).).)))))))))))))))).
-
-
+>RS008811|BA000002.2/445649-445320|Aeropyrum pernix K1|RNaseP_arch
+GGCGGCGCCGGCCGGCGGCCCACGGCCCCCCAGCCAGGGGGGCUGAGGAAACUCCGCCCUCCCCGCGGCGGCCGGGCCCCGCAAGGGGCACGGGUGAAACCCGUGGCAACGGCACAGAAACGACACGGCCCCGGGGCGUGUCGAGGACGCGGCUAGGCCGCCCUGGCAACAGGGCGGCAGCAAACCGCAGAGGAACCCCGGGGAUGCGGUGAAACGGCCGCCCCCGGCGGAGCAAGGCCCCCGGGCGGUGAGGGCCGCGCGAAGCCCGGGGGGAGACCGCUUAGCCCAAUGCCGCCGAAGUACAGAAGGCGGGUUAUGGCCGGCGCCGCC
+(((((((((((((((((((((.(((((((((.....))))))))).))..........((((........((((((((((....)))))((((((...))))))((...((((.(.(....(.(.(((((((((((..(.((......((((.(.((((((((((....)))))))))..).).)))).)).)..)))))))).).))))....)))))).))))))))))).(.(((((((((((..((.(.....).))..)))))))))....))..).........)))))).....................)))))))))))))

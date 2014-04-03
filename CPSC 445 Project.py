@@ -1,6 +1,7 @@
 import sys
 import numpy
 from DP import findMin
+from parser import runRNAEval
 knownSequences=[]
 sequenceFile=sys.argv[1]
 compareFile=sys.argv[2]
@@ -14,19 +15,19 @@ compareFileData=compareFileData.readlines()
 def getSequence(fileData,i):
 	sequence = []
 	info=' '
+	sequenceI=''
+	structure=''
 	s = fileData[i]
 	if s.startswith('>'):
 		info=s		
-		i=i+2
-		s=fileData[i]
-		s=s.rstrip()
-	while   s.startswith('>')!=True and s:
-		sequence.append(s)
 		i=i+1
-		if i>=len(fileData):
-			break
-		s=fileData[i]
-		s = s.rstrip()
+		sequenceI=fileData[i]
+		sequenceI=sequenceI.rstrip()
+		i=i+1
+		structure=fileData[i]
+		structure=structure.rstrip()
+	sequenceI=runRNAEval(sequenceI,structure)
+	sequence=sequenceI.split('\n')
 	return sequence,info,i+1
 
 def getStemLoopTrees(sequence):
@@ -47,6 +48,7 @@ def getStemLoopTrees(sequence):
 			end=True
 		loopType=item[0]+" " +item[1]
 		if loopType == loopTypeP:
+			#print item[3]
 			position=[int(x) for x in item[3].split(',')]
 			#print position,previousPosition
 			if not firstLine:
@@ -122,6 +124,7 @@ def addLeaves(stemLoopTrees):
 
 unknownSequence=[]
 unknownSequence,unknownInfo,j=getSequence(sequenceFileData,0)
+#print unknownSequence
 unknownStemLoopTrees=getStemLoopTrees(unknownSequence)
 unknownStemLoopTrees=addLeaves(unknownStemLoopTrees)
 #print unknownStemLoopTrees
@@ -141,11 +144,11 @@ while i<len(compareFileData):
 for num in range(0,len(knownSequenceStemLoopTrees)):
 	knownSequenceStemLoopTrees[num]=addLeaves(knownSequenceStemLoopTrees[num])
 
-#print knownSequenceStemLoopTrees[0]
+#print knownSequenceStemLoopTrees[7]
 #####################################################################################################
 #Initialization
 #D=numpy.zeros((
-print unknownStemLoopTrees[1]
+#print unknownStemLoopTrees[1]
 #print knownSequenceStemLoopTrees[0][0]
 findMin(unknownStemLoopTrees[1],knownSequenceStemLoopTrees[0][0])
 
