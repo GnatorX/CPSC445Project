@@ -1,6 +1,7 @@
 import sys
 import numpy
 from DP import findMin
+from DP import getIndexingPairs
 from parser import runRNAEval
 knownSequences=[]
 sequenceFile=sys.argv[1]
@@ -8,7 +9,7 @@ compareFile=sys.argv[2]
 
 sequenceFileData=open(sequenceFile,'r')
 compareFileData=open(compareFile,'r')
-
+unknownBaseSequence=''
 sequenceFileData=sequenceFileData.readlines()
 compareFileData=compareFileData.readlines()
 
@@ -18,17 +19,19 @@ def getSequence(fileData,i):
 	sequenceI=''
 	structure=''
 	s = fileData[i]
+	baseSequence=''
 	if s.startswith('>'):
 		info=s		
 		i=i+1
 		sequenceI=fileData[i]
 		sequenceI=sequenceI.rstrip()
+		baseSequence=sequenceI
 		i=i+1
 		structure=fileData[i]
 		structure=structure.rstrip()
 	sequenceI=runRNAEval(sequenceI,structure)
 	sequence=sequenceI.split('\n')
-	return sequence,info,i+1
+	return (sequence,info,i+1,baseSequence)
 
 def getStemLoopTrees(sequence):
 	StemLoopTrees=[]
@@ -123,7 +126,7 @@ def addLeaves(stemLoopTrees):
 #def compareStemLoop(unknownStemLoop,knownStemLoop):
 
 unknownSequence=[]
-unknownSequence,unknownInfo,j=getSequence(sequenceFileData,0)
+unknownSequence,unknownInfo,j,unknownBaseSequence=getSequence(sequenceFileData,0)
 #print unknownSequence
 unknownStemLoopTrees=getStemLoopTrees(unknownSequence)
 unknownStemLoopTrees=addLeaves(unknownStemLoopTrees)
@@ -133,9 +136,11 @@ knownSequences=[]
 knownInfos=[]
 i=0
 knownSequenceStemLoopTrees=[]
+knowBaseSequences=[]
 while i<len(compareFileData):
-	knownSequence,knownSequenceInfo,i=getSequence(compareFileData,i)
+	knownSequence,knownSequenceInfo,i,knownBaseSequence=getSequence(compareFileData,i)
 	knownSequences.append(knownSequence)
+	knowBaseSequences.append(knownBaseSequence)
 	knownInfos.append(knownSequenceInfo)
 	k = getStemLoopTrees(knownSequence)
 	knownSequenceStemLoopTrees.append(k)
@@ -150,5 +155,16 @@ for num in range(0,len(knownSequenceStemLoopTrees)):
 #D=numpy.zeros((
 #print unknownStemLoopTrees[1]
 #print knownSequenceStemLoopTrees[0][0]
-findMin(unknownStemLoopTrees[1],knownSequenceStemLoopTrees[0][0])
-
+#findMin(unknownStemLoopTrees[1],knownSequenceStemLoopTrees[0][0],unknownSequence,knownSequences[0])
+indexPairs= getIndexingPairs(knownSequenceStemLoopTrees[7][5])
+print knowBaseSequences[7]
+for pair in indexPairs:
+	print '(',
+	for num in range(0,2):
+		p=pair[num]
+		for numK in range(0,2):
+			if p[numK] is not '-':
+				print knowBaseSequences[7][p[numK]-1],
+			else:
+				print '-',
+	print ')'
