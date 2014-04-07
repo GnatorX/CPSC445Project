@@ -123,6 +123,7 @@ def addLeaves(stemLoopTrees):
 				curRight=tree[num][1]
 	return stemLoopTrees
 
+
 #def compareStemLoop(unknownStemLoop,knownStemLoop):
 
 unknownSequence=[]
@@ -156,15 +157,9 @@ for num in range(0,len(knownSequenceStemLoopTrees)):
 #print unknownStemLoopTrees[1]
 #print knownSequenceStemLoopTrees[0][0]
 #findMin(unknownStemLoopTrees[1],knownSequenceStemLoopTrees[0][0],unknownSequence,knownSequences[0])
-indexPairs= getIndexingPairs(knownSequenceStemLoopTrees[7][5])
-print knowBaseSequences[7]
-for pair in indexPairs:
-	print '(',
-	for num in range(0,2):
-		p=pair[num]
-		for numK in range(0,2):
-			if p[numK] is not '-':
-				print knowBaseSequences[7][p[numK]-1],
-			else:
-				print '-',
-	print ')'
+indexPairs,pointers= getIndexingPairs(knownSequenceStemLoopTrees[7][5])
+
+print pointers
+#print knowBaseSequences[7]
+
+
