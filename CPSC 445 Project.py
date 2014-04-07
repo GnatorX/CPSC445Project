@@ -157,6 +157,7 @@ for num in range(0,len(knownSequenceStemLoopTrees)):
 #print unknownStemLoopTrees[1]
 #print knownSequenceStemLoopTrees[0][0]
 #findMin(unknownStemLoopTrees[1],knownSequenceStemLoopTrees[0][0],unknownSequence,knownSequences[0])
+print knownSequenceStemLoopTrees[7][5]
 indexPairs,pointers= getIndexingPairs(knownSequenceStemLoopTrees[7][5])
 
 print pointers
