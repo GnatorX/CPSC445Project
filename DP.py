@@ -1,10 +1,17 @@
 import math
+import numpy
+numpy.set_printoptions(threshold=numpy.nan)
 
-deletionScore=insertScore=0.75
+deletionScore=insertScore=1
 relabelScore=0.25
 arcCreateScore=arcDestroyScore=0.5
 alterScore=completeScore=1
+pairDeletionScore=1.5
 
+INTERNALNODE=0
+LEFTLEAF=1
+RIGHTLEAF=2
+LEAFLEAF=3
 def getIndexingPairs(stemLoop):
     indexingPairs=[]
     # 4 pointers: current (x, y), (p(x), y), (x, s(y)), (p(x), s(y))
@@ -16,7 +23,7 @@ def getIndexingPairs(stemLoop):
     
     for node in stemLoop:
         # node - self (e.g. CG, CG)
-        indexingPairs.append(((node[0],node[1]),(node[0],node[1])))
+        indexingPairs.append(((node[0],node[1]),(node[0],node[1]),INTERNALNODE))
         i = i+1
         pointers.append([i, -1, -1, prevNode])
         currNode = i
@@ -25,14 +32,14 @@ def getIndexingPairs(stemLoop):
             # left leaf - node (e.g. A-, CG)
             leftLeafPred = currNode
             for leaf in node[3]:
-                indexingPairs.append(((leaf,'-'),(node[0],node[1])))
+                indexingPairs.append(((leaf,'-'),(node[0],node[1]),LEFTLEAF))
                 i = i+1
                 pointers.append([i, leftLeafPred, -1, -1])
                 leftLeafPred = i
             # node - right leaf (e.g. CG, -U)
             rightLeafSucc = currNode
             for leaf in reversed(node[4]):
-                indexingPairs.append(((node[0],node[1]),('-',leaf)))
+                indexingPairs.append(((node[0],node[1]),('-',leaf),RIGHTLEAF))
                 i = i+1
                 pointers.append([i, -1, rightLeafSucc, -1])
                 rightLeafSucc = i
@@ -50,7 +57,7 @@ def getIndexingPairs(stemLoop):
             for leftLeaf in node[3]:
                 predxy = currLeftLeafStart
                 for rightLeaf in reversed(node[4]):
-                    indexingPairs.append(((leftLeaf,'-'),('-',rightLeaf)))
+                    indexingPairs.append(((leftLeaf,'-'),('-',rightLeaf),LEAFLEAF))
                     i = i+1
                     pointers.append([i, predxy, xsuccy, predxsuccy])
                     predxy = predxy + 1
@@ -64,7 +71,7 @@ def getIndexingPairs(stemLoop):
             first=True
             #Start with left leaves
             for leaf in node[3]:
-                indexingPairs.append(((leaf,'-'),(node[0],node[1])))
+                indexingPairs.append(((leaf,'-'),(node[0],node[1]),LEFTLEAF))
                 i=i+1
                 #If first just go one back (didn't use previous node because the i don't understand the behaviour of it
                 if first:
@@ -78,7 +85,7 @@ def getIndexingPairs(stemLoop):
             #Right leaves is the same as left leaves except for the first one where it refers back to the previous internal 
             #node (currNode)
             for leaf in reversed(node[3]):
-                indexingPairs.append(((node[0],node[1]),('-',leaf)))
+                indexingPairs.append(((node[0],node[1]),('-',leaf),RIGHTLEAF))
                 i=i+1
                 if first:
                     pointers.append([i,-1,currNode,-1])
@@ -93,7 +100,7 @@ def getIndexingPairs(stemLoop):
                 numOfTerm=len(node[3])
                 first=True
                 for numK in reversed(range(num+1,len(node[3]))):
-                        indexingPairs.append(((node[3][num],'-'),('-',node[3][numK])))
+                        indexingPairs.append(((node[3][num],'-'),('-',node[3][numK]),LEAFLEAF))
                         i=i+1
                         #Successor is previous indexing pair
                         successor=i-1
@@ -126,12 +133,43 @@ def printOutIndexingPairs(indexingPairs,baseSequence):
                 print '-',
     print ')'
 
+def initialization(firstIndexingPair,secondIndexingPair,firstPointer,secondPointer):
+   # print len(firstIndexingPair),len(firstPointer)
+    D=numpy.zeros((len(firstIndexingPair)+1,len(secondIndexingPair)+1))
+
+    for num in range(1,len(firstIndexingPair)+1 ):
+         #  print firstIndexingPair[num-1][2]
+        if firstIndexingPair[num-1][2]==INTERNALNODE:
+         #   print firstPointer[num][3],num
+            D[num,0]=D[firstPointer[num][3],0]+pairDeletionScore
+        elif firstIndexingPair[num-1][2]==RIGHTLEAF:
+            D[num,0]=D[firstPointer[num][2],0]+deletionScore
+        elif firstIndexingPair[num-1][2]==LEFTLEAF:
+            D[num,0]=D[firstPointer[num][1],0]+deletionScore
+        elif firstIndexingPair[num-1][2]==LEAFLEAF:
+            D[num,0]=D[firstPointer[num][3],0]+2*deletionScore
+    for num in range(1,len(secondIndexingPair)+1):
+        if secondIndexingPair[num-1][2]==INTERNALNODE:
+            print num,secondPointer[num][3],D[0,secondPointer[num][3]]
+            D[0,num]=D[0,secondPointer[num][3]]+pairDeletionScore
+        elif secondIndexingPair[num-1][2]==RIGHTLEAF:
+            D[0,num]=D[0,secondPointer[num][2]]+deletionScore
+        elif secondIndexingPair[num-1][2]==LEFTLEAF:
+           
+           D[0,num]=D[0,secondPointer[num][1]]+deletionScore
+        elif secondIndexingPair[num-1][2]==LEAFLEAF:
+            D[0,num]=D[0,secondPointer[num][3]]+2*deletionScore
+    return D
+
 def findMin(inputStemLoop,outputStemLoop,inputSequence,outputSequence):
-    inputIndexingPair=getIndexingPair(inputStemLoop)
+   
+    inputIndexingPair,inPointers=getIndexingPairs(inputStemLoop)
     #print inputIndexingPair
-    outputIndexingPair=getIndexingPair(outputStemLoop)
-    #print outputIndexingPair
-    D=numpy.zeros(len(inputIndexingPair),len(outputIndexingPair))
+    #print inputIndexingPair
+    outputIndexingPair,outPointers=getIndexingPairs(outputStemLoop)
+  #  print outputIndexingPair[0][2]
+    D= initialization(inputIndexingPair,outputIndexingPair,inPointers,outPointers)
+    print D
     
     
 
