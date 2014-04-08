@@ -8,7 +8,7 @@ insertScore=1
 relabelScore=0.25
 arcCreateScore=1
 arcDestroyScore=1
-alterScore=1
+alterScore=1.5
 completeScore=1.5
 pairDeletionScore=1.5
 pairInsertionScore=1.5
@@ -270,7 +270,7 @@ def recurrence(D, pairs1, pairs2, pointers1, pointers2):
                     deletiony = D[pointer1[2], pointer2[0]] + deletionScore
                     scores.append((deletiony, 2, 0))
                 score = min(scores, key = lambda tup: tup[0])
-            D[xy, uv] = score[0]
+            D[xy, uv] = round( score[0], 2 )
             Prow.append((score[1], score[2]))
         P.append(Prow)
     return D,P
@@ -314,10 +314,7 @@ def traceback(D, P, resultPairs1, resultPairs2, resultPointers1, resultPointers2
     stop = 0
     while stop == 0:
         #print 'currrow=' + str(currrow) + ', currcol=' + str(currcol)
-        #firstPair = resultPairs1[currrow-1]
-        #secondPair = resultPairs2[currcol-1]
-        
-        path.append((resultPairs1[currrow-1], resultPairs2[currcol-1], D[currrow, currcol]))
+        path.append((resultPairs1[currrow-1], resultPairs2[currcol-1], round( D[currrow, currcol], 2 )))
         
         backPointers = P[currrow-1][currcol-1]
         #print backPointers
@@ -341,14 +338,51 @@ def findMin(inputStemLoop,outputStemLoop,inputSequence,outputSequence):
     #print inputIndexingPair
     outputIndexingPair,outPointers=getIndexingPairs(outputStemLoop)
   #  print outputIndexingPair[0][2]
-    D= initialization(outputIndexingPair,inputIndexingPair,outPointers,inPointers)
+    D = initialization(outputIndexingPair,inputIndexingPair,outPointers,inPointers)
     #print D
     D2,P = recurrence(D, outputIndexingPair,inputIndexingPair,outPointers,inPointers)
-    #print 'DISTANCE MATRIX : '
-    #print D2
+    print 'DISTANCE MATRIX : '
+    print D2
     rawPath = traceback(D2, P, outputIndexingPair, inputIndexingPair, outPointers, inPointers)
     print 'RAW TRACEBACK PATH :'
-    print rawPath
+    print rawPath.reverse()
+    
+    # Convert raw traceback path to a list of indexing pairs with bases
+    basePath = []
+    print 'TRACEBACK PATH WITH BASES :'
+    for pair in rawPath:
+        firstPair = pair[0]
+        secondPair = pair[1]
+        score = pair[2]
+        
+        # indexing pair from the first sequence
+        base1 = outputSequence[firstPair[0][0] ]
+        if firstPair[0][1] == '-':
+            base2 = '-'
+        else: base2 = outputSequence[firstPair[0][1] ]
+        if firstPair[1][0] == '-':
+            base3 = '-'
+        else: base3 = outputSequence[firstPair[1][0] ]
+        base4 = outputSequence[firstPair[1][1] ]
+        # indexing pair from the second sequence
+        base5 = inputSequence[secondPair[0][0] ]
+        if secondPair[0][1] == '-':
+            base6 = '-'
+        else: base6 = inputSequence[secondPair[0][1] ]
+        if secondPair[1][0] == '-':
+            base7 = '-'
+        else: base7 = inputSequence[secondPair[1][0] ]
+        base8 = inputSequence[secondPair[1][1] ]
+        
+        # Construct a string for each indexing pair
+        firstPairBases = ''.join(['(', base1, base2, ', ', base3, base4, ')'])
+        secondPairBases = ''.join(['(', base5, base6, ', ', base7, base8, ')'])
+        
+        pairBases = (firstPairBases, secondPairBases, score)
+        basePath.append(pairBases)
+        print pairBases
+        
+    
     
     
 
