@@ -159,8 +159,8 @@ for num in range(0,len(knownSequenceStemLoopTrees)):
 #findMin(unknownStemLoopTrees[1],knownSequenceStemLoopTrees[0][0],unknownSequence,knownSequences[0])
 #print knownSequenceStemLoopTrees[7][5]
 #indexPairs,pointers= getIndexingPairs(knownSequenceStemLoopTrees[7][5])
-findMin(unknownStemLoopTrees[0],knownSequenceStemLoopTrees[7][5],unknownBaseSequence,knowBaseSequences[7])
+findMin(knownSequenceStemLoopTrees[7][2],knownSequenceStemLoopTrees[7][5],knowBaseSequences[7],knowBaseSequences[7])
 #print indexPairs,pointers
-#print knowBaseSequences[7]
+print knowBaseSequences[7]
 
 

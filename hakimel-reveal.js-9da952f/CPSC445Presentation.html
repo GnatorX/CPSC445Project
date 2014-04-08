@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Edit Distance Between RNA Stem-loop</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+    <section data-id="9964f8a69d1796cf546b4caeb92d6638">
+       
+			<h2>Implementation of Guignon, Chauve and Hamel Edit Distance Between RNA Stem-loop</h2>
+
+<p>
+    <font style="font-size: 32px;">
+        <br>
+        <span style="font-size: 72.01535034179688px;">
+        </span>
+    </font>
+</p>
+<p>
+<font style="font-size: 32px;">
+    <span style="font-size: 72.01535034179688px;">
+        <br>
+    </span>
+</font>
+</p>
+<h2>
+<font style="font-size: 32px;">Garvin Pang and Jeong Woo Choi<br>
+</font>
+</h2>
+</section>
+<section data-id="ced5dd931e3711beca6c6f4e80aa82a9">
+    <section data-id="25f1e56709b467589d993e7c6c3e5e83">
+		<h2>RNA Secondary Structure</h2>
+		<img src="http://upload.wikimedia.org/wikipedia/commons/3/3f/Stem-loop.svg"/>
+		<ul>
+		<li>
+			Generated from base pairing interactions between nucleotides in the RNA
+		</li>
+		<li>
+			Secondary Structure of RNA are often in the form of stem-loops
+		</li>
+		
+		</ul>
+		</section>
+		<section>
+		<h2>Notable Secondary Structure</h2>
+			<ul>
+			<li>tRNA</li>
+			</ul>
+			<p/>
+		<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/59/TRNA-Phe_yeast_en.svg/482px-TRNA-Phe_yeast_en.svg.png"> </img>
+		<aside class="notes">
+		-Brings amino acid to ribosome during protein synthesis
+		</aside>
+		</section>
+		<section>
+			<ul>
+				<li>
+					Rho-independent Terminator
+				</li>
+			</ul>
+		<img src="http://upload.wikimedia.org/wikipedia/en/thumb/d/d0/Rho-independent_terminator_sequence_and_secondary_structure_conservation.jpg/512px-Rho-independent_terminator_sequence_and_secondary_structure_conservation.jpg"/>
+		<aside class="notes">
+		- Causes termination of RNA transcription in prokaryotes
+		</aside>
+		</section>
+
+</section>
+<section>
+<section>
+<h2>History</h2>
+<ol>
+<li>
+Previously algorithms generated trees and calculated edit distance between them using limited set edit operations
+</li>
+<li>
+More recently, a algorithm that utilizes a larger set of edit operations. However, the algorithm is NP-Hard
+</li>
+</ol>
+</section>
+<section>
+<h2>For this paper</h2>
+<ul>
+<li>
+Algorithm performs a conservative mapping between stem-loops 
+</li>
+<li>
+Only considers edit operations between bases that are more closely located
+</li>
+<li>
+This allows a larger range of edit operations to be incorporated while running in polynomial time
+</li>
+</ul>
+</section>
+</section>
+<section>
+<section>
+	<h2>Parsing RNA Structure</h2>
+	<pre ><code style="position:absolute;left:-400px;align:center;width:1700px">>RS000653|AF169230.1/225-380|Oryza sativa|5_8S_rRNA
+GACUCUCGGCAACGGAUAUCUCGGCUCUCGCAUCGAUGAAGAACGUAGCGAAAUGCGAUACCUGGUGUGAAUUGCAGAAUCCCGUGAACCAUCGAGUCUUUGAACGCAAGUUGCGCCCGAGGCCAUCCGGCCGAGGGCACGCCUGCCUGGGCGUCA
+..................................(.(...(((((((......))))..((.(((((((.(((....))).).).....))))).)).)))..))(((...)))((((..((((....))))..))))..................
+
+</code></pre>
+</section>
+<section>
+<h2>Output</h2>
+<img src="parsedStructure.png"/>
+<ul>
+	<li>
+	Use RNAeval from Vienna RNA package by the Theoretical Biochemistry Group
+	</li>
+	
+</ul>
+</section>
+</section>
+<section>
+	<h2>Tree Representation of a Stem-loop</h2>
+	<img src="TreeRepStem.png"/>
+	<aside class="notes">
+		- Those nodes that have complementary pairing are called internal nodes
+		- Those internal loops are considered as a left or right leaf
+	</aside>
+	
+</section>
+<section>
+	<h2>Edit Operations </h2>
+	<img src="editOp.png"/>
+	<aside class="notes">
+		- We also allocate a score to each operation
+	</aside>
+</section>
+<section>
+<section>
+<h2>Indexing Pairs: How we compare Stem-loops </h2>
+<ul>
+<li>
+Pair of nodes that is able to create a subtree from the stem-loop 
+</li>
+<ol>
+<li>
+Traverse through the stem-loop tree from first index node to the other index node in a DFS manner
+</li>
+<li>
+Remove all nodes it traversed
+</li>
+<li>
+Remainder is the subtree
+</li>
+</ol>
+<li>
+5 ways to generate indexing pairs 
+</li>
+</ul>
+</section>
+<section>
+Internal node and itself
+<p/>
+<img src="interN.png"/>
+</section>
+<section>
+Internal node with its left leaf or right leaf
+<p/>
+<img src="leftI.png"/>
+<img src="rightI.png"/>
+</section>
+<section>
+Leaf with another leaf
+<p/>
+<img src="ll.png"/>
+</section>
+<section>
+Lastly, terminal leafs with another terminal leaf
+<p/>
+<img src="terN.png"/>
+</section>
+</section>
+<section>
+	<h2> Initialization</h2>
+We will let (x,y) and (u,v) be indexing pairs of subtree T1 and T2 respectively from two different stem-loops
+		<img src="init.png"/>
+	<aside class="notes">
+		- Current node's score is equal to the sum of all scores for each node in its subtree
+	</aside>
+</section>
+<section>
+<section>
+<h2>Recurrence</h2>
+<p/>
+Four cases
+<ol>
+<li>
+x=y and u=v
+<ul>
+<li>
+ Internal node to Internal node for both indexing pairs 
+ </li>
+</ul>
+</li>
+</ol>
+<img src="case1.png"/>
+
+	<aside class="notes">
+		- 2nd case since only one scenario where x =y (both internal nodes) then x!=y and be all other cases out of the 5 possible cases
+	</aside>
+</section>
+<section>
+<ol>
+<li style="list-style-type:none;" />
+<li>
+x!=y and u=v
+<ul>
+<li>
+Internal node to leaf
+</li>
+<li>
+Leaf to leaf (Both non-terminal)
+</li>
+<li>
+Terminal leaf to terminal leaf
+</li>
+</ul>
+</li>
+<li>
+x=y and u!=v
+</li>
+</ol>
+<p/>
+<img src="case2.png"/>
+</section>
+<section>
+<ol>
+
+<li>
+Vice Versa of 2
+</li>
+<li>
+x!=y and u!=v
+</li>
+</ol>
+</section>
+<section>
+<h2>General Explanation</h2>
+x=y and u=v 
+<p/>
+
+</section>
+
+</section>
+</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

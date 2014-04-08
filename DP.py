@@ -159,7 +159,7 @@ def initialization(firstIndexingPair,secondIndexingPair,firstPointer,secondPoint
     # First Row
     for num in range(1,len(secondIndexingPair)+1):
         if secondIndexingPair[num-1][2]==INTERNALNODE:
-            print num,secondPointer[num][3],D[0,secondPointer[num][3]]
+            #print num,secondPointer[num][3],D[0,secondPointer[num][3]]
             D[0,num]=D[0,secondPointer[num][3]]+pairDeletionScore
         elif secondIndexingPair[num-1][2]==RIGHTLEAF:
             D[0,num]=D[0,secondPointer[num][2]]+deletionScore
@@ -270,9 +270,9 @@ def findMin(inputStemLoop,outputStemLoop,inputSequence,outputSequence):
     #print inputIndexingPair
     outputIndexingPair,outPointers=getIndexingPairs(outputStemLoop)
   #  print outputIndexingPair[0][2]
-    D= initialization(inputIndexingPair,outputIndexingPair,inPointers,outPointers)
+    D= initialization(outputIndexingPair,inputIndexingPair,outPointers,inPointers)
     #print D
-    D2 = recurrence(D, resultPairs1,resultPairs2,resultPointers1,resultPointers2)
+    D2 = recurrence(D, outputIndexingPair,inputIndexingPair,outPointers,inPointers)
     print 'DISTANCE MATRIX : '
     print D2
     

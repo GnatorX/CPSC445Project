@@ -1,0 +1,84 @@
+> rcorr(outvsamp,type="pearson")
+           Out.Degree   amp
+Out.Degree       1.00 -0.02
+amp             -0.02  1.00
+
+n
+           Out.Degree amp
+Out.Degree         85  36
+amp                36  85
+
+P
+           Out.Degree amp   
+Out.Degree            0.9287
+amp        0.9287           
+> rcorr(outvshw,type="pearson")
+           Out.Degree   hw
+Out.Degree       1.00 0.26
+hw               0.26 1.00
+
+n
+           Out.Degree hw
+Out.Degree         85 36
+hw                 36 85
+
+P
+           Out.Degree hw    
+Out.Degree            0.1226
+hw         0.1226           
+> rcorr(outvstau,type="pearson")
+           Out.Degree   tau
+Out.Degree       1.00 -0.11
+tau             -0.11  1.00
+
+n
+           Out.Degree tau
+Out.Degree         85  29
+tau                29  85
+
+P
+           Out.Degree tau   
+Out.Degree            0.5722
+tau        0.5722           
+> rcorr(outvsrmp,type="pearson")
+           Out.Degree   rmp
+Out.Degree       1.00 -0.07
+rmp             -0.07  1.00
+
+n
+           Out.Degree rmp
+Out.Degree         85  38
+rmp                38  85
+
+P
+           Out.Degree rmp   
+Out.Degree            0.6619
+rmp        0.6619           
+> rcorr(outvsir,type="pearson")
+           Out.Degree Log.of.Ir
+Out.Degree       1.00      0.22
+Log.of.Ir        0.22      1.00
+
+n
+           Out.Degree Log.of.Ir
+Out.Degree         85        42
+Log.of.Ir          42        85
+
+P
+           Out.Degree Log.of.Ir
+Out.Degree            0.1644   
+Log.of.Ir  0.1644              
+> rcorr(outvsthresh,type="pearson")
+           Out.Degree thresh
+Out.Degree       1.00   0.13
+thresh           0.13   1.00
+
+n
+           Out.Degree thresh
+Out.Degree         85     34
+thresh             34     85
+
+P
+           Out.Degree thresh
+Out.Degree            0.4812
+thresh     0.4812         

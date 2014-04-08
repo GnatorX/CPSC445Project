@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Studying the relationship between Neuron Electrophysiological Properties and Connectivity</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+    <section data-id="9964f8a69d1796cf546b4caeb92d6638">
+        <p>
+        <font style="font-size: 32px;">
+            <span style="font-size: 72.01535034179688px;">Exploring the relationship between Neuron Electrophysiological Properties and Connectivity&nbsp; <br>
+            </span>
+        </font>
+    </p>
+<p>
+    <font style="font-size: 32px;">
+        <br>
+        <span style="font-size: 72.01535034179688px;">
+        </span>
+    </font>
+</p>
+<p>
+<font style="font-size: 32px;">
+    <span style="font-size: 72.01535034179688px;">
+        <br>
+    </span>
+</font>
+</p>
+<h2>
+<font style="font-size: 32px;">Garvin Pang<br>
+</font>
+</h2>
+</section>
+<section data-id="ced5dd931e3711beca6c6f4e80aa82a9">
+    <section data-id="25f1e56709b467589d993e7c6c3e5e83">
+        <h2>Prelude</h2>
+<h3>Shreejoy's work<br>
+</h3>
+<p>
+<img style="width: 920.513px; height: 476.621px; max-height: none; max-width: none;" src="https://s3.amazonaws.com/media-p.slid.es/uploads/gnator/images/310855/NeuroElectro.png">
+    </p>
+
+<br>
+<aside class="notes">
+	-First part inspired Shreejoy developed a database of neurons and their associated electrophysiological properties by text mining existing literature. 
+	</aside>
+</section>
+<section data-id="1eee280a5e39f8a3d48707340f5ddcd5">
+    <h2>Shreejoy's Work<img src="https://s3.amazonaws.com/media-p.slid.es/uploads/gnator/images/310921/ShreejoyWorkPresentation.jpg">
+        <br>
+	<aside class="notes">
+	-As part of his paper, Shreejoy also studied the differences in ephy and gene expression where he mapped neurons to brain region
+	-This mapping is used for my project
+	</aside>
+</h2>
+	
+    </section>
+</section>
+<section data-id="efadde2e5c703c231c8003680d430e1e">
+    <h2>Leon's Work</h2>
+	<ul>
+		<li>
+			Studied the relationship between gene expression and brain region connectivity
+		</li>
+		<li>
+			Utilized the BAMS data base for brain connectivity in his work 
+		</li>
+	
+	</ul>
+	<aside class="notes">
+	-Second part, connectivity, Inspired from Leon's work, who studied gene exp vs connectivity
+	</aside>
+</section>
+<section data-id="a2cb666bf2e50043cefa3022746c4b39">
+    <h2>Introduction to data set</h2>
+<ul>
+<li>We used three different data set for this project</li>
+    </ul>
+
+    <img style="border:0px;position: absolute; max-height: none; max-width: none; width: 1500px; height: 287px; z-index: 4; left: -200px; top: 100px;" align="left" src="Dataset Comparison.jpg">
+    <br/>
+	<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+	<ul>
+        <li>Each data set uses a different atlas/ different brain region naming scheme<br>
+</li>
+    </ul>
+<aside class="notes">
+	-Before start, talk about differences in the data sets I am using
+	</aside>
+
+
+
+</section>
+    <section data-id="ee781297ba8e4250d85c596121f3a755">
+        <h2>Project Overview</h2>
+<ol>
+<li>
+        <p>Create mapping from each atlas to another </p>
+    </li>
+<li>
+    <p>Generate connectivity matrices from Old BAMS&nbsp; and new BAMS data set&nbsp; </p>
+</li>
+<li>Create a neuron connectivity matrix based on Shreejoy's neuron to brain region mapping and BAMS' connectivity matrix<br>
+</li>
+<li>
+Determine if a correlation exist between neuron connectivity and their electrophysiological properties
+</li>
+</ol>
+</section>
+<section>
+<section data-id="4ef0a567cc6e39e6de94b64ab01694a4">
+<h2>Mapping <br>
+</h2>
+<pre ><code style="align:center;" class="language-python">
+		#First check for perfect matches
+        if(Levenshtein.ratio(line,bLine)==1):
+        #Find the most likely match
+        elif(Levenshtein.ratio(line,bLine)>X):
+       
+	#Print out matches in different category
+    if(X==1):
+        perMap.write(curMaxS+'\n')
+    elif(X>0.9):
+        goodEnoughMap.write(str(curMaxS)+ '\t'+str(curMaxB)+'\n');
+    elif(re.search(pattern,str(curMaxS))and X>0.7):
+        layerMap.write(curMaxS+'\t'+curMaxB+'\n'+str(X)+'\n\n')
+    else:
+        partMap.write("Shreejoy: "+curMaxS+ "\nBAM: "+curMaxB+"\nDistance: "+str(X)+"\n\n")
+</code></pre>
+<h2>&nbsp;</h2>
+<aside class="notes">
+	-Strategy to improve manual curation was to categorize output data in difficulty to curate
+	</aside>
+
+</section>
+<section>
+<h2>Mapping Progress</h2>
+<img src="Mapping Progress.bmp" style="position:absolute;width: 1000px; height: 300px; z-index: 4; left: -20px; top: 100px;"></img>
+</section>
+</section>
+<section>
+<section>
+<h2 align="center">Brain Region Connectivity Matrix</h2>
+<h3>Old BAMS</h3>
+<p>
+<ul>
+    <li>Old BAMS data were in XML format</li>
+	
+</ul>
+<code class="language-xml"><pre>
+<part id="1" name="Brain Region">
+	<targets>
+	    <target id="2" name="Target 1" />
+	</targets>
+	<sources>
+	    <source id="3" name="Source 1"/>
+	</sources>
+</code></pre>
+<ul>
+	<li>Data was binary (connection exist or not)</li>
+</ul>
+</p>
+</section>
+<section>
+<h2 align="center">Brain Region Connectivity Matrix</h2>
+<h3>New BAMS</h3>
+<ul>
+	<li>
+	Data was provided my Mihail Bota directly in form of a excel file
+	</li>
+	<li>
+	Source regions in one column, target in another 
+	</li>
+	<li>
+	Projection strength was provided
+	</li>
+</ul>
+</section>
+<section>
+<h2 align="center">Brain Region Connectivity Matrix</h2>
+<ul>
+	<li style="color:green">
+	Generate Brain Region Connectivity Matrix for Old BAMS data
+	<ul>
+	<li>
+	Completed
+	</li>
+	</ul>
+	</li>
+	<li style="color:green">
+	Generate Neuron Connectivity Matrix for New BAMS data
+	<ul>
+	<li>
+	Completed
+	</li>
+	</ul>
+	</li>
+</ul>
+
+</section>
+</section>
+
+<section>
+<h2>Neuron Connectivity Matrix</h2>
+<ul>
+	<li style="color:green">
+	Generate Neuron Connectivity Matrix for Old BAMS data
+	<ul>
+	<li>
+	Completed
+	</li>
+	</ul>
+	</li>
+	<li style="color:red">
+	Generate Neuron Connectivity Matrix for New BAMS data
+	<ul>
+		<li>
+			Mapping from Allen Brain Atlas required
+		</li>
+	</ul>
+	</li>
+</ul>
+
+</section>
+<section>
+<section>
+<h2>Data Analysis</h2>
+<img style="border:0px;"src="OldVsNew.png"/>
+<aside class="notes">
+	-Above = gained connectivity, under = lost =>suspect lost degree = regoins broken into sub regions 
+	</aside>
+</section>
+<section><h2>Data Analysis</h2>
+<img style="border:0px;position:absolute; z-index: 4; left: -200px; top: 75px;" src="OutVsResting.png"/>
+<img style="border:0px;position:absolute; z-index: 4; left: 500px; top: 75px;" src="OutVsLog(IR).png"/>
+<br/>
+
+	<font style="position:absolute;top:500px;left:20px"> r= -0.07 <br/>  p=0.6619</font>
+	<font style="position:absolute;top:500px;left:700px"> r= 0.22   p=0.1644</font>
+	
+</section>
+
+</section>
+
+<section>
+<h2> Improvements and Future Work</h2>
+<ul>
+<li>
+	Use new BAMS data for analysis
+	<ul>
+	<li>
+	Slightly less sparse data set
+	</li>
+	</ul>
+</li>
+<li>
+	Perform the Mantel test
+</li>
+
+</ul>
+<aside class="notes">
+	-0.03 vs 0.01 and a new dataset to play with
+	Looking at the correlation of ephy and neurons and correlation of connectivity and neurons and see if
+		correlation between correlation
+	</aside>
+</section>
+<section>
+<h2> Acknowledgement </h2>
+Shreejoy, Paul<br/> 
+and Rest of the lab <br/>
+For your support and mentorship
+
+</section>
+
+<section>
+<h2> Questions? </h2>
+</section>
+</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
