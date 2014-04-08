@@ -349,6 +349,14 @@ def findMin(inputStemLoop,outputStemLoop,inputSequence,outputSequence):
     
     # Convert raw traceback path to a list of indexing pairs with bases
     basePath = []
+    # Generate the base number of the first indexing pairs
+    pair1Start = rawPath[0][0]
+    pair2Start = rawPath[0][1]
+    print pair1Start
+    print pair2Start
+    offset1 = pair1Start[0][0]
+    offset2 = pair2Start[0][0]
+    
     print 'TRACEBACK PATH WITH BASES :'
     for pair in rawPath:
         firstPair = pair[0]
@@ -356,23 +364,23 @@ def findMin(inputStemLoop,outputStemLoop,inputSequence,outputSequence):
         score = pair[2]
         
         # indexing pair from the first sequence
-        base1 = outputSequence[firstPair[0][0] ]
+        base1 = outputSequence[firstPair[0][0] -offset1]
         if firstPair[0][1] == '-':
             base2 = '-'
-        else: base2 = outputSequence[firstPair[0][1] ]
+        else: base2 = outputSequence[firstPair[0][1] -offset1]
         if firstPair[1][0] == '-':
             base3 = '-'
-        else: base3 = outputSequence[firstPair[1][0] ]
-        base4 = outputSequence[firstPair[1][1] ]
+        else: base3 = outputSequence[firstPair[1][0] -offset1]
+        base4 = outputSequence[firstPair[1][1] -offset1]
         # indexing pair from the second sequence
-        base5 = inputSequence[secondPair[0][0] ]
+        base5 = inputSequence[secondPair[0][0] -offset2]
         if secondPair[0][1] == '-':
             base6 = '-'
-        else: base6 = inputSequence[secondPair[0][1] ]
+        else: base6 = inputSequence[secondPair[0][1] -offset2]
         if secondPair[1][0] == '-':
             base7 = '-'
-        else: base7 = inputSequence[secondPair[1][0] ]
-        base8 = inputSequence[secondPair[1][1] ]
+        else: base7 = inputSequence[secondPair[1][0] -offset2]
+        base8 = inputSequence[secondPair[1][1] -offset2]
         
         # Construct a string for each indexing pair
         firstPairBases = ''.join(['(', base1, base2, ', ', base3, base4, ')'])
